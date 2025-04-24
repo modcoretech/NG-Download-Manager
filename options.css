@@ -1,0 +1,194 @@
+/* Reuse variables from popup.css or define separately */
+:root {
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --primary-color: #007bff;
+    --border-color: #dee2e6;
+    --input-bg: #ffffff;
+    --input-border: #ced4da;
+    --button-bg: #007bff;
+    --button-text: #ffffff;
+    --button-hover-bg: #0056b3;
+    --success-color: #28a745;
+    --section-bg: #ffffff;
+    --section-shadow: rgba(0, 0, 0, 0.05);
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+@media (prefers-color-scheme: dark) {
+   :root {
+       --bg-color: #202124;
+       --text-color: #e8eaed;
+       --primary-color: #8ab4f8;
+       --border-color: #3c4043;
+       --input-bg: #303134;
+       --input-border: #5f6368;
+       --button-bg: #8ab4f8;
+       --button-text: #202124;
+       --button-hover-bg: #a8c7fa;
+       --success-color: #81c995;
+       --section-bg: #2d2e31;
+       --section-shadow: rgba(0, 0, 0, 0.3);
+   }
+}
+
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 25px;
+    background-color: var(--section-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--section-shadow);
+}
+
+h1 {
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.settings-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.settings-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 20px;
+}
+
+
+.setting {
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    align-items: center;
+    gap: 10px;
+}
+
+.setting label {
+    flex-basis: 200px; /* Give labels a consistent width */
+    flex-shrink: 0;
+    display: flex; /* For aligning checkbox with text */
+    align-items: center;
+    gap: 8px;
+}
+
+.setting input[type="checkbox"] {
+    margin-right: 5px;
+    accent-color: var(--primary-color); /* Style checkbox color */
+    width: 16px;
+    height: 16px;
+}
+.setting input[type="number"] {
+    width: 70px;
+    padding: 5px 8px;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border-radius: 4px;
+}
+.setting select {
+    padding: 6px 10px;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border-radius: 4px;
+    min-width: 150px;
+}
+
+.setting input:focus, .setting select:focus {
+     outline: none;
+     border-color: var(--primary-color);
+     box-shadow: 0 0 0 2px var(--primary-color-transparent, rgba(0, 123, 255, 0.25));
+}
+
+.description {
+    font-size: 0.85em;
+    color: var(--secondary-color, #6c757d);
+    margin: 5px 0 0 0;
+    flex-basis: 100%; /* Make description take full width below */
+     padding-left: calc(200px + 10px); /* Align with input/select */
+}
+/* Adjust padding if label width changes */
+
+
+#saveButton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#saveButton:hover {
+    background-color: var(--button-hover-bg);
+}
+#saveButton:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.status-message {
+    margin-top: 15px;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    min-height: 1.5em; /* Prevent layout shift */
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.status-message.visible {
+     opacity: 1;
+}
+
+.status-message.success {
+    background-color: var(--success-light, #d4edda);
+    color: var(--success-dark, #155724);
+    border: 1px solid var(--success-border, #c3e6cb);
+}
+
+@media (prefers-color-scheme: dark) {
+    .status-message.success {
+       background-color: #2e7d32; /* Darker green */
+       color: #e8f5e9;
+       border-color: #388e3c;
+   }
+}
+
+/* Adjust layout for smaller screens */
+@media (max-width: 600px) {
+    .setting label {
+        flex-basis: 100%; /* Stack label above input */
+        margin-bottom: 5px;
+    }
+     .description {
+         padding-left: 0; /* Remove indent on small screens */
+     }
+}

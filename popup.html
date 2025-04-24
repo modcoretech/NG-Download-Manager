@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Download Manager</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-title">
+                <img src="icons/icon48.png" alt="" class="header-logo"> <h1>Downloads</h1>
+            </div>
+            <div class="header-controls">
+                <button id="addUrlButton" class="icon-button" title="Download from URL" aria-label="Download from URL">
+                     <img src="assets/icons/plus-circle.svg" alt="Add URL">
+                </button>
+                <div class="search-wrapper">
+                    <img src="assets/icons/search.svg" alt="" class="search-icon">
+                    <input type="search" id="searchInput" placeholder="Search..." aria-label="Search downloads">
+                </div>
+                 <button id="refreshButton" class="icon-button" title="Refresh List" aria-label="Refresh Download List">
+                    <img src="assets/icons/refresh-cw.svg" alt="Refresh">
+                 </button>
+                <button id="themeToggleButton" class="icon-button" title="Toggle Theme" aria-label="Toggle Light/Dark Theme">
+                    <img src="assets/icons/moon.svg" alt="Theme" id="themeIcon">
+                </button>
+                 <button id="optionsButton" class="icon-button" title="Settings" aria-label="Open Settings Page">
+                    <img src="assets/icons/settings.svg" alt="Settings">
+                </button>
+            </div>
+        </header>
+
+        <div id="addUrlSection" class="add-url-section hidden">
+             <input type="url" id="urlInput" placeholder="Paste download URL here..." aria-label="Download URL">
+             <button id="startDownloadButton" title="Start Download"><img src="assets/icons/download.svg" alt="Download"></button>
+             <button id="cancelAddUrlButton" title="Cancel"><img src="assets/icons/x.svg" alt="Cancel"></button>
+        </div>
+
+        <div class="toolbar">
+            <div class="toolbar-section">
+                 <select id="filterStatus" aria-label="Filter by status">
+                    <option value="all">All Statuses</option>
+                    <option value="active">Active</option>
+                    <option value="in_progress">Downloading</option>
+                    <option value="paused">Paused</option>
+                    <option value="interrupted">Failed/Cancelled</option>
+                    <option value="complete">Completed</option>
+                 </select>
+                 <select id="filterDate" aria-label="Filter by date">
+                     <option value="all">All Time</option>
+                     <option value="today">Today</option>
+                     <option value="yesterday">Yesterday</option>
+                     <option value="last7">Last 7 Days</option>
+                     <option value="last30">Last 30 Days</option>
+                 </select>
+            </div>
+             <div class="toolbar-section">
+                 <select id="sortBy" aria-label="Sort by">
+                    <option value="startTimeDesc">Date Added (Newest)</option>
+                    <option value="startTimeAsc">Date Added (Oldest)</option>
+                    <option value="filenameAsc">Name (A-Z)</option>
+                    <option value="filenameDesc">Name (Z-A)</option>
+                    <option value="totalBytesDesc">Size (Largest)</option>
+                    <option value="totalBytesAsc">Size (Smallest)</option>
+                 </select>
+                 <select id="itemsPerPage" aria-label="Items per page">
+                     <option value="10">10 / page</option>
+                     <option value="20">20 / page</option>
+                     <option value="50">50 / page</option>
+                 </select>
+            </div>
+        </div>
+
+        <div id="batchActionBar" class="batch-action-bar hidden">
+            <div class="batch-info">
+                <input type="checkbox" id="selectAllCheckbox" aria-label="Select all visible items">
+                <span id="selectedCount">0 selected</span>
+            </div>
+            <div class="batch-buttons">
+                <button data-batch-action="pause" title="Pause Selected"><img src="assets/icons/pause.svg" alt="Pause"></button>
+                <button data-batch-action="resume" title="Resume Selected"><img src="assets/icons/play.svg" alt="Resume"></button>
+                <button data-batch-action="cancel" title="Cancel Selected"><img src="assets/icons/x-octagon.svg" alt="Cancel"></button>
+                <button data-batch-action="retry" title="Retry Selected Failed"><img src="assets/icons/refresh-ccw.svg" alt="Retry"></button>
+                <button data-batch-action="clear" title="Remove Selected from List"><img src="assets/icons/trash.svg" alt="Clear"></button>
+            </div>
+        </div>
+
+        <main id="downloadsList" class="downloads-list" aria-live="polite">
+            <div class="placeholder-container">
+                <p class="placeholder">Loading downloads...</p>
+            </div>
+            </main>
+
+         <div id="paginationControls" class="pagination-controls hidden">
+             <button id="prevPageButton" title="Previous Page" aria-label="Previous Page" class="icon-button"><img src="assets/icons/chevron-left.svg" alt="Previous"></button>
+             <span id="pageInfo">Page 1 of 1</span>
+             <button id="nextPageButton" title="Next Page" aria-label="Next Page" class="icon-button"><img src="assets/icons/chevron-right.svg" alt="Next"></button>
+         </div>
+
+        <footer class="footer">
+             <span id="statusSummary">Total: 0 | Active: 0</span>
+             <button id="clearAllFinishedButton" class="text-button subtle">
+                 <img src="assets/icons/trash-2.svg" alt=""> Clear Finished
+             </button>
+        </footer>
+
+         <div id="moreActionsMenuTemplate" class="more-actions-menu" style="display: none;">
+            <button data-action="pause"><img src="assets/icons/pause.svg" alt=""> Pause</button>
+             <button data-action="resume"><img src="assets/icons/play.svg" alt=""> Resume</button>
+             <button data-action="cancel"><img src="assets/icons/x-octagon.svg" alt=""> Cancel</button>
+             <button data-action="open"><img src="assets/icons/external-link.svg" alt=""> Open File</button>
+             <button data-action="show"><img src="assets/icons/folder.svg" alt=""> Show in Folder</button>
+             <button data-action="retry"><img src="assets/icons/refresh-ccw.svg" alt=""> Retry Download</button>
+             <button data-action="saveAs"><img src="assets/icons/save.svg" alt=""> Save As...</button>
+             <button data-action="copyLink"><img src="assets/icons/link.svg" alt=""> Copy Download Link</option>
+             <button data-action="copySourceLink"><img src="assets/icons/link-2.svg" alt=""> Copy Source URL</button>
+             <button data-action="showError"><img src="assets/icons/alert-triangle.svg" alt=""> Show Error Details</button>
+             <button data-action="clear"><img src="assets/icons/trash.svg" alt=""> Remove from List</button>
+        </div>
+
+        <div id="itemMessageTemplate" class="item-message" style="display: none;"></div>
+
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

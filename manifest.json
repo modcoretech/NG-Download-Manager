@@ -1,0 +1,32 @@
+{
+    "manifest_version": 3,
+    "name": "NG Download Manager",
+    "version": "1.5.0",
+    "description": "A modern popup download manager with drag & drop, grouping, concurrent limits, batch actions, and polished UI/UX.",
+    "permissions": [
+        "downloads",
+        "storage",
+        "notifications",
+        "contextMenus",
+        "offscreen",
+        "alarms"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "NG Download Manager"
+    },
+    "options_page": "options.html",
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Y",
+                "mac": "Command+Shift+Y"
+            },
+            "description": "Open NG Download Manager Popup"
+        }
+    },
+    "minimum_chrome_version": "109"
+}

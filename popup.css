@@ -1,0 +1,239 @@
+/* --- Base & Variables --- */
+:root {
+    /* ... (keep existing variables, ensure info-color exists) ... */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-size-base: 13px;
+    --font-size-sm: 11px;
+    --font-size-lg: 16px;
+    --bg-color: #ffffff;
+    --text-color: #202124;
+    --text-color-secondary: #5f6368;
+    --text-color-link: #1a73e8;
+    --border-color: #dadce0;
+    --surface-color: #f1f3f4;
+    --surface-hover: #e8eaed;
+    --primary-color: #1a73e8;
+    --primary-color-light: #d2e3fc;
+    --primary-text: #ffffff;
+    --danger-color: #d93025;
+    --warning-color: #f9ab00;
+    --success-color: #1e8e3e;
+    --info-color: #17a2b8;
+    --icon-color: #5f6368;
+    --icon-button-hover-bg: rgba(60, 64, 67, 0.08);
+    --input-bg: #f1f3f4;
+    --input-border-focus: #1a73e8;
+    --shadow-color: rgba(60, 64, 67, 0.3);
+    --scrollbar-thumb: #bdc1c6;
+    --scrollbar-track: transparent;
+    color-scheme: light;
+}
+
+[data-theme="dark"] {
+    /* ... (keep existing dark theme variables) ... */
+     --bg-color: #202124; --text-color: #e8eaed; --text-color-secondary: #9aa0a6; --text-color-link: #8ab4f8; --border-color: #3c4043; --surface-color: #2d2e31; --surface-hover: #3c4043; --primary-color: #8ab4f8; --primary-color-light: #28354a; --primary-text: #202124; --danger-color: #f28b82; --warning-color: #fdd663; --success-color: #81c995; --info-color: #4dd0e1; --icon-color: #9aa0a6; --icon-button-hover-bg: rgba(232, 234, 237, 0.08); --input-bg: #303134; --input-border-focus: #8ab4f8; --shadow-color: rgba(0, 0, 0, 0.5); --scrollbar-thumb: #5f6368; --scrollbar-track: transparent;
+    color-scheme: dark;
+}
+
+/* --- General Elements --- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    width: 580px; /* Slightly wider for filters */
+    max-height: 580px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 580px;
+}
+
+button { /* ... (keep existing styles) ... */
+    font-family: inherit; cursor: pointer; transition: background-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+button:disabled { cursor: not-allowed; opacity: 0.5; }
+
+input[type="search"], input[type="url"], select { /* ... (keep existing styles) ... */
+    font-family: inherit; font-size: var(--font-size-base); padding: 6px 10px; border: 1px solid var(--border-color); background-color: var(--input-bg); color: var(--text-color); border-radius: 16px; transition: border-color 0.15s ease, box-shadow 0.15s ease; height: 32px;
+}
+input:focus, select:focus { outline: none; border-color: var(--input-border-focus); box-shadow: 0 0 0 2px var(--primary-color-light); }
+
+select { /* ... (keep existing styles, including themed chevron) ... */
+    appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23${(p) => p.theme === 'dark' ? '9aa0a6' : '5f6368'}' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; padding-right: 28px; cursor: pointer;
+}
+
+
+img { max-width: 100%; display: block; }
+
+.icon-button { /* ... (keep existing styles) ... */
+     background: none; border: none; padding: 6px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--icon-color); flex-shrink: 0;
+}
+.icon-button img { width: 18px; height: 18px; filter: var(--theme-icon-filter, none); }
+.icon-button:hover:not(:disabled) { background-color: var(--icon-button-hover-bg); }
+.icon-button:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 1px; box-shadow: 0 0 0 2px var(--primary-color-light); }
+
+
+.text-button { /* ... (keep existing styles) ... */
+    background-color: var(--surface-color); color: var(--text-color-secondary); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 16px; font-size: var(--font-size-sm); display: inline-flex; align-items: center; gap: 5px; font-weight: 500;
+}
+.text-button img { width: 14px; height: 14px; filter: var(--theme-icon-filter, none); }
+.text-button:hover:not(:disabled) { background-color: var(--surface-hover); border-color: var(--text-color-secondary); }
+.text-button.subtle { border: none; background: none; }
+.text-button.subtle:hover:not(:disabled) { background-color: var(--icon-button-hover-bg); }
+
+.hidden { display: none !important; }
+
+/* Icon Theming */
+/* ... (keep existing icon theming) ... */
+[data-theme="dark"] img, [data-theme="dark"] .icon-button img, [data-theme="dark"] .text-button img { filter: var(--theme-icon-filter, invert(75%) sepia(11%) saturate(549%) hue-rotate(175deg) brightness(95%) contrast(86%)); } [data-theme="dark"] #themeIcon[src$="sun.svg"] { filter: invert(100%) sepia(90%) saturate(3000%) hue-rotate(35deg) brightness(110%) contrast(100%); }
+
+/* --- Header --- */
+.header { /* ... (keep existing styles) ... */
+     display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border-color); flex-shrink: 0;
+}
+.header-title { display: flex; align-items: center; gap: 8px; }
+.header-logo { width: 24px; height: 24px; border-radius: 4px; }
+.header h1 { font-size: var(--font-size-lg); font-weight: 500; margin: 0; }
+.header-controls { display: flex; align-items: center; gap: 4px; }
+.search-wrapper { position: relative; display: flex; align-items: center; }
+.search-icon { position: absolute; left: 10px; width: 16px; height: 16px; color: var(--icon-color); filter: var(--theme-icon-filter, none); pointer-events: none; }
+#searchInput { padding-left: 32px; width: 160px; } /* Slightly wider search */
+
+/* --- Add URL Section --- */
+.add-url-section { /* ... (keep existing styles) ... */
+    display: flex; padding: 10px 12px; gap: 8px; background-color: var(--surface-color); border-bottom: 1px solid var(--border-color); flex-shrink: 0;
+}
+#urlInput { flex-grow: 1; }
+.add-url-section button { flex-shrink: 0; background-color: var(--surface-hover); border: 1px solid var(--border-color); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
+.add-url-section button img { width: 16px; height: 16px; filter: var(--theme-icon-filter, none); }
+.add-url-section button:hover:not(:disabled) { background-color: var(--border-color); }
+
+
+/* --- Toolbar --- */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap; /* Allow sections to wrap if needed */
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+    gap: 10px; /* Gap between sections */
+}
+.toolbar-section {
+    display: flex;
+    gap: 8px; /* Gap within section */
+    align-items: center;
+}
+.toolbar select {
+    max-width: 140px; /* Max width for selects */
+    flex-shrink: 1;
+}
+#itemsPerPage { max-width: 90px;}
+
+/* --- Batch Action Bar --- */
+.batch-action-bar { /* ... (keep existing styles) ... */
+    display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background-color: var(--primary-color-light); border-bottom: 1px solid var(--border-color); flex-shrink: 0;
+}
+.batch-info { display: flex; align-items: center; gap: 8px; font-size: var(--font-size-sm); color: var(--text-color-secondary); }
+#selectAllCheckbox { accent-color: var(--primary-color); margin-right: 4px; }
+.batch-buttons { display: flex; gap: 2px; } /* Reduced gap */
+.batch-buttons button { background: none; border: none; padding: 4px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-color-secondary); }
+.batch-buttons button img { width: 16px; height: 16px; filter: var(--theme-icon-filter, none); }
+.batch-buttons button:hover:not(:disabled) { background-color: rgba(0,0,0,0.1); }
+[data-theme="dark"] .batch-buttons button:hover:not(:disabled) { background-color: rgba(255,255,255,0.1); }
+
+/* --- Downloads List --- */
+.downloads-list { /* ... (keep existing styles) ... */
+    flex-grow: 1; overflow-y: auto; padding: 0; position: relative;
+}
+.placeholder-container { /* ... (keep existing styles) ... */
+    display: flex; justify-content: center; align-items: center; min-height: 150px; padding: 20px;
+}
+.placeholder { color: var(--text-color-secondary); text-align: center; font-size: var(--font-size-base); }
+
+/* --- Download Item --- */
+.download-item { /* ... (keep existing styles, ensure alignment is flex-start) ... */
+    display: flex; align-items: flex-start; padding: 10px 12px; border-bottom: 1px solid var(--border-color); gap: 10px; /* Reduced gap */ position: relative; transition: background-color 0.15s ease;
+}
+.download-item:hover { background-color: var(--surface-hover); }
+.download-item:last-child { border-bottom: none; }
+
+.item-selection { padding-top: 8px; flex-shrink: 0; }
+.item-checkbox { accent-color: var(--primary-color); cursor: pointer;}
+.file-icon { width: 32px; height: 32px; flex-shrink: 0; object-fit: contain; margin-top: 2px;}
+
+.download-info { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; /* Reduced gap */ }
+
+.filename { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; color: var(--text-color); text-decoration: none; margin-bottom: 2px; line-height: 1.3; }
+.filename:hover { color: var(--text-color-link); text-decoration: underline; }
+
+.status-details {
+    font-size: var(--font-size-sm); color: var(--text-color-secondary); display: flex; flex-wrap: wrap; gap: 3px 8px; align-items: center; line-height: 1.4;
+}
+.status-text { font-weight: 500; white-space: nowrap; }
+.status-text.complete { color: var(--success-color); } .status-text.interrupted { color: var(--danger-color); } .status-text.paused { color: var(--warning-color); } .status-text.in_progress { color: var(--primary-color); }
+.size, .speed, .eta, .item-date { white-space: nowrap; padding-right: 4px; }
+.item-date { color: var(--text-color-secondary); } /* Style for date */
+
+.progress-container { width: 100%; height: 5px; background-color: var(--surface-hover); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+.progress-bar { height: 100%; background-color: var(--primary-color); border-radius: 3px; transition: width 0.3s ease; }
+.progress-bar.paused { background-color: var(--warning-color); } .progress-bar.interrupted { background-color: var(--danger-color); width: 100% !important; } .progress-bar.complete { background-color: var(--success-color); }
+
+.item-actions { display: flex; gap: 2px; flex-shrink: 0; padding-top: 5px; align-items: center; }
+.item-actions .icon-button img { width: 16px; height: 16px; }
+
+/* --- Item Message --- */
+.item-message-area { margin-top: 4px; }
+.item-message { font-size: var(--font-size-sm); padding: 3px 6px; border-radius: 4px; border: 1px solid transparent; animation: fadeIn 0.3s ease; display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item-message.error { color: var(--danger-color); background-color: rgba(217, 48, 37, 0.1); border-color: rgba(217, 48, 37, 0.2); }
+[data-theme="dark"] .item-message.error { background-color: rgba(242, 139, 130, 0.15); border-color: rgba(242, 139, 130, 0.3); }
+.item-message.info { color: var(--info-color); background-color: rgba(23, 162, 184, 0.1); border-color: rgba(23, 162, 184, 0.2); }
+[data-theme="dark"] .item-message.info { background-color: rgba(77, 208, 225, 0.15); border-color: rgba(77, 208, 225, 0.3); }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+
+/* --- More Actions Menu --- */
+.more-actions-menu { /* ... (keep existing styles, adjust position if needed) ... */
+    position: absolute; right: 10px; top: 35px; background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px var(--shadow-color); padding: 6px 0; z-index: 10; display: flex; flex-direction: column; min-width: 180px;
+}
+.more-actions-menu button { background: none; border: none; text-align: left; padding: 8px 12px; font-size: var(--font-size-base); color: var(--text-color); display: flex; align-items: center; gap: 8px; }
+.more-actions-menu button img { width: 16px; height: 16px; filter: var(--theme-icon-filter, none); color: var(--icon-color); }
+.more-actions-menu button:hover:not(:disabled) { background-color: var(--surface-color); }
+.more-actions-menu button:disabled { color: var(--text-color-secondary); cursor: not-allowed; background-color: transparent; }
+.more-actions-menu button:disabled img { opacity: 0.5; }
+
+/* --- Pagination Controls --- */
+.pagination-controls { /* ... (keep existing styles) ... */
+    display: flex; justify-content: center; align-items: center; padding: 8px 12px; border-top: 1px solid var(--border-color); flex-shrink: 0; gap: 10px; font-size: var(--font-size-sm); color: var(--text-color-secondary);
+}
+#pageInfo { font-weight: 500; white-space: nowrap; }
+.pagination-controls .icon-button { padding: 4px; }
+.pagination-controls .icon-button img { width: 16px; height: 16px; }
+
+
+/* --- Footer --- */
+.footer { /* ... (keep existing styles) ... */
+    display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-top: 1px solid var(--border-color); flex-shrink: 0; font-size: var(--font-size-sm); color: var(--text-color-secondary);
+}
+#statusSummary { font-weight: 500; }
+
+/* --- Scrollbar --- */
+.downloads-list::-webkit-scrollbar { width: 10px; }
+.downloads-list::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+.downloads-list::-webkit-scrollbar-thumb { background-color: var(--scrollbar-thumb); border-radius: 5px; border: 2px solid var(--bg-color); }
+.downloads-list::-webkit-scrollbar-thumb:hover { background-color: var(--text-color-secondary); }
+
+/* --- Accessibility --- */
+*:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 1px; }
+.icon-button:focus-visible, input:focus-visible, select:focus-visible { outline: none; }

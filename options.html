@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NG Download Manager Settings</title>
+    <link rel="stylesheet" href="options.css"> </head>
+<body>
+    <div class="container">
+        <h1>NG Download Manager Settings</h1>
+
+        <section class="settings-section">
+            <h2>Appearance</h2>
+            <div class="setting">
+                <label for="themeSelect">Theme:</label>
+                <select id="themeSelect">
+                    <option value="system">Follow System</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+                 <p class="description">Choose the visual theme for the extension popup.</p>
+            </div>
+        </section>
+
+        <section class="settings-section">
+            <h2>Notifications</h2>
+            <div class="setting">
+                <label>
+                    <input type="checkbox" id="notifyOnComplete">
+                    Notify on download completion
+                </label>
+            </div>
+            <div class="setting">
+                <label>
+                    <input type="checkbox" id="notifyOnFail">
+                    Notify on download failure
+                </label>
+            </div>
+        </section>
+
+         <section class="settings-section">
+            <h2>Behavior</h2>
+             <div class="setting">
+                 <label for="defaultSort">Default Popup Sort Order:</label>
+                 <select id="defaultSort">
+                    <option value="startTimeDesc">Date (Newest)</option>
+                    <option value="startTimeAsc">Date (Oldest)</option>
+                    <option value="filenameAsc">Name (A-Z)</option>
+                    <option value="filenameDesc">Name (Z-A)</option>
+                    <option value="totalBytesDesc">Size (Largest)</option>
+                    <option value="totalBytesAsc">Size (Smallest)</option>
+                 </select>
+                 <p class="description">How downloads are sorted by default in the popup.</p>
+             </div>
+             <div class="setting">
+                 <label for="itemsPerPage">Downloads Per Page:</label>
+                 <select id="itemsPerPage">
+                     <option value="10">10</option>
+                     <option value="20">20</option>
+                     <option value="50">50</option>
+                      <option value="100">100</option>
+                 </select>
+                 <p class="description">Number of downloads shown on each page in the popup.</p>
+             </div>
+             <div class="setting">
+                 <label for="autoOpenTypes">Auto-open downloaded file types:</label>
+                 <input type="text" id="autoOpenTypes" placeholder="e.g., pdf,jpg,docx">
+                  <p class="description">Comma-separated list of extensions (no dots) to open automatically after download.</p>
+             </div>
+             </section>
+
+        <div class="status-message" id="statusMessage" role="status" aria-live="polite"></div>
+
+        <button id="saveButton">Save Settings</button>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>
